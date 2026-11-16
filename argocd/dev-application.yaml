@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: hw6-orders-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/HghaVlad/example
+    targetRevision: main
+    path: k8s-hw6/overlays/dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: hw6-orders-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

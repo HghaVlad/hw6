@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: orders
+spec:
+  selector:
+    app: orders
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orders
+  template:
+    metadata:
+      labels:
+        app: orders
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: app
+          image: nginx:1.28.0-alpine
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi
+          volumeMounts:
+            - name: content
+              mountPath: /etc/nginx/conf.d/default.conf
+              subPath: default.conf
+              readOnly: true
+            - name: content
+              mountPath: /usr/share/nginx/html/index.html
+              subPath: index.html
+              readOnly: true
+      volumes:
+        - name: content
+          configMap:
+            name: stub-content
