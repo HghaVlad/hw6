@@ -14,5 +14,6 @@ spec:
     namespace: hw6-orders-dev
   syncPolicy:
     automated:
+      enabled: true
       prune: true
       selfHeal: true

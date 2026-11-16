@@ -1,0 +1,18 @@
+name: Release prod
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+concurrency: release-prod
+
+jobs:
+  sync:
+    runs-on: [self-hosted, hw6]
+    steps:
+      - name: Sync prod
+        run: |
+          kubectl config use-context kind-hw6
+          kubectl config set-context --current --namespace=argocd
+          argocd --core app sync hw6-orders-prod --prune --timeout 300
+          argocd --core app wait hw6-orders-prod --sync --health --timeout 300

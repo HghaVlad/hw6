@@ -13,7 +13,6 @@ spec:
     server: https://kubernetes.default.svc
     namespace: hw6-orders-prod
   syncPolicy:
+    # Sync запускает workflow Release prod, автоматическая выкладка выключена.
     automated:
-      prune: true
-      selfHeal: true
-      enabled: true
+      enabled: false
