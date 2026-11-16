@@ -8,7 +8,7 @@ concurrency: release-prod
 
 jobs:
   sync:
-    runs-on: [self-hosted, hw6]
+    runs-on: self-hosted
     steps:
       - name: Sync prod
         run: |
