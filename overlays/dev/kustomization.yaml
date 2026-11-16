@@ -8,3 +8,22 @@ resources:
 images:
   - name: nginx
     newTag: "1.28.0-alpine"
+
+# Меняем только текст: HTML-шаблоны остаются в base/apps.
+# Хеш ConfigMap вызывает rollout при изменении значений.
+configMapGenerator:
+  - name: catalog-settings
+    literals:
+      - APP_ENV=dev
+      - PAGE_TITLE=Каталог товаров
+      - PAGE_MESSAGE=Тестовая страница. Здесь будет список товаров.
+  - name: orders-settings
+    literals:
+      - APP_ENV=dev
+      - PAGE_TITLE=Заказы
+      - PAGE_MESSAGE=Тестовая страница. Здесь будут ваши заказы.
+  - name: notifications-settings
+    literals:
+      - APP_ENV=dev
+      - PAGE_TITLE=Уведомления
+      - PAGE_MESSAGE=Тестовая страница. Здесь будут уведомления о заказах.

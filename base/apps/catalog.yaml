@@ -28,6 +28,15 @@ spec:
       containers:
         - name: app
           image: nginx:1.28.0-alpine
+          envFrom:
+            - configMapRef:
+                name: catalog-settings
+          env:
+            # Штатный entrypoint nginx создаёт index.html из шаблона и env.
+            - name: NGINX_ENVSUBST_OUTPUT_DIR
+              value: /usr/share/nginx/html
+            - name: NGINX_ENVSUBST_FILTER
+              value: "^(PAGE_TITLE|PAGE_MESSAGE|APP_ENV)$"
           ports:
             - name: http
               containerPort: 8080
@@ -47,11 +56,14 @@ spec:
               mountPath: /etc/nginx/conf.d/default.conf
               subPath: default.conf
               readOnly: true
-            - name: content
-              mountPath: /usr/share/nginx/html/index.html
-              subPath: index.html
+            - name: page-template
+              mountPath: /etc/nginx/templates/index.html.template
+              subPath: index.html.template
               readOnly: true
       volumes:
         - name: content
           configMap:
             name: stub-content
+        - name: page-template
+          configMap:
+            name: catalog-page

@@ -8,4 +8,12 @@ configMapGenerator:
   - name: stub-content
     files:
       - nginx/default.conf
-      - nginx/index.html
+  - name: catalog-page
+    files:
+      - index.html.template=apps/catalog.html.template
+  - name: orders-page
+    files:
+      - index.html.template=apps/orders.html.template
+  - name: notifications-page
+    files:
+      - index.html.template=apps/notifications.html.template
