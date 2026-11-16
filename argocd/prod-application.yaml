@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/HghaVlad/example
+    repoURL: https://github.com/HghaVlad/hw6
     targetRevision: main
-    path: k8s-hw6/overlays/prod
+    path: overlays/prod
   destination:
     server: https://kubernetes.default.svc
     namespace: hw6-orders-prod
