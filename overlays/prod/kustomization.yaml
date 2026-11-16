@@ -20,7 +20,7 @@ configMapGenerator:
   - name: orders-settings
     literals:
       - APP_ENV=prod
-      - PAGE_TITLE=Заказы тута вот
+      - PAGE_TITLE=и туоаоа
       - PAGE_MESSAGE=Здесь будут ваши заказы.
   - name: notifications-settings
     literals:
